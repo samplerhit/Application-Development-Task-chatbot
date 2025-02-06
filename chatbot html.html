@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Application</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f4; }
+        .chat-container { width: 350px; background: #f0f4f0; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .chat-box { height: 400px; overflow-y: auto; padding: 10px; border-bottom: 1px solid #ddd; }
+        .chat-box p { margin: 5px 0; padding: 8px; border-radius: 5px; }
+        .user { background: #007bff; color: rgb(165, 252, 174); text-align: right; }
+        .bot { background: #f4de1d; text-align: left; }
+        .input-area { display: flex; margin-top: 10px; }
+        input { flex: 1; padding: 10px; border: none; border-radius: 5px; }
+        button { padding: 10px; border: none; background: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput");
+            const chatBox = document.getElementById("chatBox");
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+            
+            // Append user message
+            appendMessage("user", userMessage);
+            
+            // Generate bot response (Simulated API call)
+            setTimeout(() => {
+                const botResponse = getBotResponse(userMessage);
+                appendMessage("bot", botResponse);
+            }, 500);
+            
+            // Clear input field
+            userInput.value = "";
+        }
+
+        function appendMessage(sender, message) {
+            const chatBox = document.getElementById("chatBox");
+            const msgElement = document.createElement("p");
+            msgElement.classList.add(sender);
+            msgElement.textContent = message;
+            chatBox.appendChild(msgElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getBotResponse(input) {
+            const responses = {
+                "hi": "Hi there! How can I help you today?",
+                "hello": "Hello! How can I assist you today?",
+                "how are you": "I'm just a bot, but I'm doing great!",
+                "help": "I can help you with a variety of things. What do you need help with?",
+                "thanks": "You're welcome! Let me know if there's anything else I can help with.",
+                "thank you": "You're welcome! Let me know if there's anything else I can help with",  "bye": "Goodbye! Have a great day!",                                                                                         
+                "default": "I'm not sure I understand. Can you clarify?"
+            };
+            return responses[input.toLowerCase()] || responses["default"];
+        }
+    </script>
+</body>
+</html>
